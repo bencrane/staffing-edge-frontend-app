@@ -8,10 +8,18 @@
     "start": "next start -p 8080"
   },
   "dependencies": {
+    "@base-ui/react": "^1.3.0",
+    "@oex/comms-sdk": "github:bencrane/comms-package",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "jose": "^6.2.2",
+    "lucide-react": "^0.577.0",
     "next": "^15.5.14",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "shadcn": "^4.1.0",
+    "tailwind-merge": "^3.5.0",
+    "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",
