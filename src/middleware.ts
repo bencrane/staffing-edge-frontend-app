@@ -14,6 +14,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  const token = request.cookies.get("se_token");
+  if (!token) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("from", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
   return NextResponse.next();
 }
 
