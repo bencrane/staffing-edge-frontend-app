@@ -8,6 +8,7 @@
     "start": "next start -p 8080"
   },
   "dependencies": {
+    "jose": "^6.2.2",
     "next": "^15.5.14",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
