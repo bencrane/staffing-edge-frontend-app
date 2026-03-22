@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setAuthCookies } from "@/lib/auth-cookies";
 import { oexFetch } from "@/lib/api-server";
 
 const DEX_BASE = process.env.DEX_API_BASE_URL || "http://localhost:8001";
+
+const OEX_COOKIE = "se_token";
+const DEX_COOKIE = "se_dex_token";
+
+function cookieOptions(maxAge: number) {
+  const domain = process.env.COOKIE_DOMAIN || undefined;
+  return {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax" as const,
+    path: "/",
+    maxAge,
+    ...(domain ? { domain } : {}),
+  };
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -40,12 +54,17 @@ export async function POST(req: NextRequest) {
         dexToken = dexData.access_token;
       }
     } catch {
-      /* silent */
+      /* DEX login is optional */
     }
 
-    await setAuthCookies(oexToken, dexToken);
+    const opts = cookieOptions(60 * 60 * 24 * 7);
+    const res = NextResponse.json({ success: true });
+    res.cookies.set(OEX_COOKIE, oexToken, opts);
+    if (dexToken) {
+      res.cookies.set(DEX_COOKIE, dexToken, opts);
+    }
 
-    return NextResponse.json({ success: true });
+    return res;
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
