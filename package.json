@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
+    "@oex/comms-sdk": "github:bencrane/comms-package",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "jose": "^6.2.2",
